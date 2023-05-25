@@ -25,5 +25,5 @@ runs:
   using: "node16"
   main: "dist/index.js"
 branding:
-  icon: "checklist"
+  icon: "check-square"
   color: "gray-dark"
