@@ -1,0 +1,26 @@
+name: Create Linear Issue Test Workflow
+
+on:
+  workflow_dispatch:
+
+jobs:
+  update-linear-issues:
+    runs-on: ubuntu-latest
+    name: A test job
+    steps:
+      # To use this repository's private action,
+      # you must check out the repository
+      - name: Checkout action repo
+        uses: actions/checkout@v3
+      - name: Create the Linear Issue
+        id: updateIssues
+        uses: ./ # Uses an action in the root directory
+        with:
+          linear-api-key: ${{secrets.LINEAR_API_KEY}}
+          linear-team-key: "CHR"
+          old-linear-issue-state-ids: "071ad1e9-4cef-4392-86eb-f4d00ec126fc,b8cc1b97-f4a0-4a1c-afd2-1fd5b89bf773"
+          new-linear-issue-state-id: "d8dc0111-0862-4ea9-8eb5-e7c127f847ce"
+          old-linear-issue-label-id: "ea7fc863-71f7-409c-bcda-b42a22dc9a75"
+      - name: Check the outputs
+        run: |
+          echo "Issue Affected: ${{ steps.updateIssues.outputs.issues-affected }}"

@@ -1,0 +1,25 @@
+name: "Update Linear Issues"
+description: "Updates a set of Linear Issues based on inputs"
+inputs:
+  linear-api-key:
+    description: "Linear API key generated from https://linear.app/settings/api"
+    required: true
+  linear-team-key:
+    description: "Team key (e.g. ENG) for the Linear issue."
+    required: true
+  old-linear-issue-state-ids:
+    description: "Comma deliminated team state IDs for the Linear issues to update."
+  old-linear-issue-label-id:
+    description: "An additional label id filter for the linear issues to update"
+  new-linear-issue-state-id:
+    description: "The new state id for the linear issues"
+
+outputs:
+  issues-affected:
+    description: "The number of linear issues affected"
+runs:
+  using: "node16"
+  main: "dist/index.js"
+branding:
+  icon: "checklist"
+  color: "gray-dark"
