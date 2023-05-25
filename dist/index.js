@@ -61,7 +61,7 @@ const main = async () => {
                     : {}),
             },
         });
-        const count = linearIssues.nodes.length;
+        const count = linearIssues?.nodes?.length || 0;
         if (count === 0) {
             (0, core_1.setOutput)("issue-affected", count);
             return;

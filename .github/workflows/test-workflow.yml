@@ -1,4 +1,4 @@
-name: Create Linear Issue Test Workflow
+name: Update Linear Issues Test Workflow
 
 on:
   workflow_dispatch:

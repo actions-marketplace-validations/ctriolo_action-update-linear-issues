@@ -1,4 +1,4 @@
-name: Create Linear Issue on Pull Request
+name: Update Linear Issues on Pull Request
 
 on:
   workflow_dispatch:
