@@ -25,6 +25,7 @@ jobs:
           old-linear-issue-state-ids: "071ad1e9-4cef-4392-86eb-f4d00ec126fc,b8cc1b97-f4a0-4a1c-afd2-1fd5b89bf773"
           new-linear-issue-state-id: "d8dc0111-0862-4ea9-8eb5-e7c127f847ce"
           old-linear-issue-label-id: "ea7fc863-71f7-409c-bcda-b42a22dc9a75"
+          comment: "Issue closed due to workflow"
       - name: Create comment in PR with the number Linear Issue Affected
         if: steps.fc.outputs.comment-id == ''
         uses: peter-evans/create-or-update-comment@v2

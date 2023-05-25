@@ -63,7 +63,8 @@ const main = async () => {
         });
         const count = linearIssues?.nodes?.length || 0;
         if (count === 0) {
-            (0, core_1.setOutput)("issue-affected", count);
+            (0, core_1.setOutput)("issue-affected", "");
+            (0, core_1.setOutput)("issue-affected-count", count);
             return;
         }
         // Get new state id
@@ -72,7 +73,17 @@ const main = async () => {
         await linearClient.issueBatchUpdate(linearIssues.nodes.map((issue) => issue.id), {
             stateId: newStateId,
         });
-        (0, core_1.setOutput)("issues-affected", count);
+        const comment = (0, core_1.getInput)("comment");
+        if (comment) {
+            await Promise.all(linearIssues.nodes.map(async (issue) => {
+                await linearClient.commentCreate({
+                    issueId: issue.id,
+                    body: comment,
+                });
+            }));
+        }
+        (0, core_1.setOutput)("issue-affected", linearIssues.nodes.map((issue) => issue.identifier).join(", "));
+        (0, core_1.setOutput)("issue-affected-count", count);
     }
     catch (error) {
         (0, core_1.setFailed)(`${error?.message ?? error}`);

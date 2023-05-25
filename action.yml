@@ -13,9 +13,13 @@ inputs:
     description: "An additional label id filter for the linear issues to update"
   new-linear-issue-state-id:
     description: "The new state id for the linear issues"
+  comment:
+    description: "Optional comment to add when the state changes"
 
 outputs:
   issues-affected:
+    description: "The list of linear issues affected"
+  issues-affected-count:
     description: "The number of linear issues affected"
 runs:
   using: "node16"

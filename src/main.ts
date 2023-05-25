@@ -1,5 +1,5 @@
 import { setFailed, getInput, setOutput } from "@actions/core";
-import { LinearClient } from "@linear/sdk";
+import { Issue, LinearClient } from "@linear/sdk";
 import getTeamByKey from "./getTeamByKey";
 
 const getIdsFromInput = (input: string): string[] => {
@@ -39,7 +39,8 @@ const main = async () => {
 
     const count = linearIssues?.nodes?.length || 0;
     if (count === 0) {
-      setOutput("issue-affected", count);
+      setOutput("issue-affected", "");
+      setOutput("issue-affected-count", count);
       return;
     }
 
@@ -54,7 +55,23 @@ const main = async () => {
       }
     );
 
-    setOutput("issues-affected", count);
+    const comment = getInput("comment");
+    if (comment) {
+      await Promise.all(
+        linearIssues.nodes.map(async (issue) => {
+          await linearClient.commentCreate({
+            issueId: issue.id,
+            body: comment,
+          });
+        })
+      );
+    }
+
+    setOutput(
+      "issue-affected",
+      linearIssues.nodes.map((issue: Issue) => issue.identifier).join(", ")
+    );
+    setOutput("issue-affected-count", count);
   } catch (error) {
     setFailed(`${(error as any)?.message ?? error}`);
   }
